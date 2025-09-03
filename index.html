@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desafio da Sprint</title>
 </head>
 <style>
-    
-           
+
+
 </style>
+
 <body>
     <h1></h1>
     <ul>
@@ -21,65 +23,77 @@
 <script>
 
     function calcularMedia(numeros) {
-    let soma = 0;
-    for (let num of numeros) {
-        soma += num;
-    }
-    return soma / numeros.length;
-}
-
-
-let distancia_Percorrida = parseFloat(prompt("Qual a distância da sua casa até o trabalho (em km)?"));
-let consumo_Medio = parseFloat(prompt("Qual o consumo médio do seu veículo (km/l)?"));
-let quantidade_Postos_Pesquisados = parseInt(prompt("Quantos postos você pesquisou?"));
-
-
-while (isNaN(quantidade_Postos_Pesquisados) || quantidade_Postos_Pesquisados > 5 || quantidade_Postos_Pesquisados <= 0) {
-    alert('Valor inválido. Por favor, insira um número entre 1 e 5.');
-    quantidade_Postos_Pesquisados = parseInt(prompt('Quantos postos você pesquisou?'));
-}
-
-
-
-if (isNaN(distancia_Percorrida) || distancia_Percorrida <= 0 || isNaN(consumo_Medio) || consumo_Medio <= 0 || isNaN(quantidade_Postos_Pesquisados) || quantidade_Postos_Pesquisados <= 0) {
-    alert("Por favor, insira valores válidos.");
-} else {
-    
-    let consumo_Necessario_Litros = (distancia_Percorrida * 2) / consumo_Medio;
-
-    
-    let precos = [];
-    
-    for (let i = 0; i < quantidade_Postos_Pesquisados; i++) {
-        
-        let preco = parseFloat(prompt(`Digite o preço do combustível no posto: `));
-        if (!isNaN(preco) && preco > 0) {
-            precos.push(preco);
-            
-        } else {
-            alert("Preço inválido. Tente novamente.");
-            i--;
+        let soma = 0;
+        for (let num of numeros) {
+            if (typeof num !== "number") {
+                num = parseFloat(num)
+            }
+            soma += num;
         }
+        console.log(soma)
+        return soma / numeros.length;
     }
 
-    
-    let mediaPreco = calcularMedia(precos);
-    
-    let menor_Preco = Math.min(...precos);
-    let indiceMelhorPosto = precos.indexOf(menor_Preco);
-    
-    let gasto_Diario = consumo_Necessario_Litros * menor_Preco;
 
-         
-    alert(`
+    let distancia_Percorrida = parseFloat(prompt("Qual a distância da sua casa até o trabalho (em km)?"));
+    let consumo_Medio = parseFloat(prompt("Qual o consumo médio do seu veículo (km/l)?"));
+    let quantidade_Postos_Pesquisados = parseInt(prompt("Quantos postos você pesquisou?"));
+
+
+    while (isNaN(quantidade_Postos_Pesquisados) || quantidade_Postos_Pesquisados > 5 || quantidade_Postos_Pesquisados <= 0) {
+        alert('Valor inválido. Por favor, insira um número entre 1 e 5.');
+        quantidade_Postos_Pesquisados = parseInt(prompt('Quantos postos você pesquisou?'));
+    }
+
+
+
+    if (isNaN(distancia_Percorrida) || distancia_Percorrida <= 0 || isNaN(consumo_Medio) || consumo_Medio <= 0 || isNaN(quantidade_Postos_Pesquisados) || quantidade_Postos_Pesquisados <= 0) {
+        alert("Por favor, insira valores válidos.");
+    } else {
+
+        let consumo_Necessario_Litros = (distancia_Percorrida * 2) / consumo_Medio;
+
+
+        let precos = [];
+
+        for (let i = 0; i < quantidade_Postos_Pesquisados; i++) {
+
+            let preco = prompt(`Digite o preço do combustível no posto: `);
+            while (true) {
+                if (preco.includes(',')) {
+                    alert('Não permitido ","')
+                    preco = prompt(`Digite o preço do combustível no posto: `);
+                } else {
+                    break
+                }
+            }
+            if (!isNaN(preco) && preco > 0) {
+                precos.push(preco);
+            } else {
+                alert("Preço inválido. Tente novamente.");
+                i--;
+            }
+        }
+
+
+        let mediaPreco = calcularMedia(precos);
+
+        let menor_Preco = Math.min(...precos);
+        let indiceMelhorPosto = precos.indexOf(menor_Preco);
+
+        let gasto_Diario = consumo_Necessario_Litros * menor_Preco;
+
+
+        alert(`
         O consumo necessário é: (R$ ${gasto_Diario.toFixed(2)})
         O menor valor pesquisado é: (R$ ${menor_Preco.toFixed(2)})
         A média dos valores pesquisados é: (R$ ${mediaPreco.toFixed(2)})
         O gasto diário (ida e volta) é: ${consumo_Necessario_Litros.toFixed(2)} litros
     `);
-    
-}
 
-   
+    }
+
+
 </script>
+
 </html>
